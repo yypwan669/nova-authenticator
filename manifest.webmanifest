@@ -1,0 +1,13 @@
+{
+  "name": "NOVA Authenticator",
+  "short_name": "NOVA Auth",
+  "description": "本地加密的离线 TOTP 身份验证器",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090d18",
+  "theme_color": "#0b1020",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
