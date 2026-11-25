@@ -1,13 +1,18 @@
 {
-  "name": "NOVA Authenticator",
-  "short_name": "NOVA Auth",
-  "description": "本地加密的离线 TOTP 身份验证器",
+  "name": "NOVA Authenticator Pro",
+  "short_name": "NOVA",
+  "description": "本地加密的离线 TOTP 验证器和密码保险库",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#090d18",
-  "theme_color": "#0b1020",
+  "background_color": "#101211",
+  "theme_color": "#101211",
   "icons": [
-    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }

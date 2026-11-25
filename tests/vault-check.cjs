@@ -97,7 +97,11 @@ async function submit(){element('loginForm').onsubmit({preventDefault(){}});awai
   await submit();
   assert.equal(run('logins[0].name'),'Edited');
   assert.equal(run('logins[0].password'),password);
-  element('lockPasswords').onclick();
+  element('settingsNav').onclick();
+  assert.equal(element('backupArea').classList.contains('hidden'),false);
+  assert.equal(element('loginCards').innerHTML.includes(password),false);
+  element('lockBtn').onclick();
+  assert.equal(element('vaultNav').classList.contains('hidden'),true);
   assert.equal(run('logins.length'),0);
   assert.equal(element('loginCards').innerHTML,'');
   element('pass').value='master-password';

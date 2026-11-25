@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b1020">
+<meta name="theme-color" content="#101211">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NOVA Auth">
@@ -12,26 +12,107 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self'; manifest-src 'self'; worker-src 'self'; media-src blob:; form-action 'none'; base-uri 'none'">
 <title>NOVA Authenticator Pro</title>
 <style>
-:root{color-scheme:dark;--bg:#090d18;--panel:#111827;--panel2:#151f31;--line:#26344b;--muted:#8da0bb;--text:#eef4ff;--cyan:#55d6e8;--violet:#9b8cff;--danger:#ff7187}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#1b3150 0,transparent 48%),var(--bg);color:var(--text);font:15px/1.45 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
-button,input{font:inherit}button{cursor:pointer}.shell{max-width:620px;margin:auto;padding:22px 17px 110px}.top{display:flex;align-items:center;justify-content:space-between;margin:5px 0 25px}.brand{display:flex;gap:11px;align-items:center}.logo{width:39px;height:39px;border-radius:13px;background:linear-gradient(145deg,#65e2ed,#7770e9);display:grid;place-items:center;color:#07111d;font-weight:900;font-size:20px;box-shadow:0 5px 25px #4bd9e533}.brand h1{font-size:17px;letter-spacing:.12em;margin:0}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;margin-top:2px}.iconbtn{border:1px solid var(--line);background:#111a2a;color:#c8d6e9;border-radius:12px;width:42px;height:42px;font-size:19px}.intro{margin:0 0 20px}.eyebrow{color:var(--cyan);font-size:10px;letter-spacing:.2em;font-weight:700}.intro h2{font-size:25px;margin:6px 0 5px;letter-spacing:-.04em}.intro p{margin:0;color:var(--muted);font-size:13px}.toolbar{display:flex;gap:9px;margin:20px 0}.primary,.secondary,.danger{border:0;border-radius:12px;padding:12px 15px;font-weight:650}.primary{background:linear-gradient(100deg,#61dce9,#8c83ff);color:#07111d;flex:1}.secondary{background:#172338;color:#dce8f8;border:1px solid var(--line)}.danger{background:#351c2a;color:#ffb4c0;border:1px solid #613043}.search{width:100%;background:#101a2a;border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);outline:none;margin-bottom:12px}.cards{display:grid;gap:11px}.card{background:linear-gradient(145deg,#141f31,#0f1726);border:1px solid #26364e;border-radius:17px;padding:16px 16px 13px;box-shadow:0 12px 35px #0002}.cardtop{display:flex;justify-content:space-between;align-items:flex-start}.issuer{font-size:14px;font-weight:750}.account{font-size:12px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}.tag{font-size:9px;letter-spacing:.12em;color:#83dbe5;border:1px solid #2d5865;border-radius:20px;padding:4px 7px}.code-row{display:flex;align-items:center;justify-content:space-between;margin-top:18px}.code{font-size:clamp(31px,9vw,39px);font-weight:750;letter-spacing:.13em;font-variant-numeric:tabular-nums;color:#f4f8ff}.copy{border:1px solid #34445e;background:#19263a;color:#dbe8fa;border-radius:10px;padding:8px 11px;font-size:12px}.progress{height:3px;background:#263449;border-radius:9px;overflow:hidden;margin-top:13px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .3s}.cardfoot{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-top:7px}.empty{border:1px dashed #34445c;border-radius:16px;padding:32px 18px;text-align:center;color:var(--muted)}.empty strong{display:block;color:#dce8f8;font-size:15px;margin-bottom:5px}.bottom{position:fixed;bottom:0;left:0;right:0;padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:#0b1120eF;border-top:1px solid #26344b;backdrop-filter:blur(18px);display:flex;justify-content:center;gap:28px;color:var(--muted);font-size:11px}.bottom button{border:0;background:none;color:inherit}.bottom button.active{color:var(--cyan)}.modal{position:fixed;inset:0;background:#030711cc;backdrop-filter:blur(9px);display:none;align-items:flex-end;justify-content:center;z-index:5;padding:15px}.modal.show{display:flex}.dialog{width:min(100%,520px);max-height:90vh;overflow:auto;background:#111b2b;border:1px solid #34445e;border-radius:22px;padding:21px;box-shadow:0 20px 80px #0009}.dialog h3{margin:0 0 5px;font-size:20px}.dialog p{color:var(--muted);font-size:12px;margin:0 0 17px}.field{display:block;margin:13px 0}.field span{display:block;font-size:12px;color:#aabbd0;margin-bottom:6px}.field input{width:100%;padding:13px;border-radius:11px;border:1px solid #34445e;background:#0b1422;color:white;outline:none}.actions{display:flex;gap:9px;margin-top:18px}.actions>*{flex:1}.hint{font-size:11px!important;color:#91a5bf!important;line-height:1.6}.notice{border:1px solid #554b32;background:#282416;color:#ead8a8;padding:11px 12px;border-radius:12px;font-size:11px;margin:14px 0}.hidden{display:none!important}.scanbox{background:#050a12;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-height:190px;display:grid;place-items:center;margin:12px 0}.scanbox video{width:100%;max-height:280px;object-fit:cover}.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:#e4faff;color:#07131b;padding:10px 16px;border-radius:30px;font-size:12px;font-weight:700;z-index:10;opacity:0;pointer-events:none;transition:opacity .2s}.toast.show{opacity:1}.lockwrap{min-height:85vh;display:grid;place-items:center}.lockpanel{width:100%;max-width:420px;background:#111b2b;border:1px solid var(--line);border-radius:22px;padding:24px}.lockpanel .logo{margin-bottom:20px}.lockpanel h2{margin:0 0 6px}.lockpanel p{color:var(--muted);font-size:13px;margin:0 0 18px}
-@media(min-width:560px){.shell{padding-top:35px}.modal{align-items:center}.cards{grid-template-columns:1fr 1fr}.card{min-width:0}}
-.password-input-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.password-input-row button{white-space:nowrap}.login-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.login-value{min-width:0;overflow-wrap:anywhere;white-space:pre-wrap}.login-card{overflow-wrap:anywhere}
+:root {
+  color-scheme:dark; --bg:#101211; --panel:#161917; --line:#282e29; --muted:#a1a9a0;
+  --text:#f0f3ed; --accent:#c7f46b; --on-accent:#1a2510; --selected:#1d281f;
+  --width:474px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:1rem/1.45 system-ui,"Microsoft YaHei",sans-serif;min-height:100dvh}
+button,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{opacity:.55;cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.hidden{display:none!important}
+.shell,.top,.nav-inner{width:min(100%,var(--width));margin-inline:auto;padding-inline:clamp(16px,5.8vw,24px)}
+.shell{padding-top:18px;padding-bottom:calc(105px + env(safe-area-inset-bottom))}
+.top{padding-top:calc(13px + env(safe-area-inset-top));height:calc(79px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:10px}.brand strong{font-size:1.1rem;letter-spacing:.17em}
+.logo{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:var(--accent);color:var(--on-accent);font-size:1.1rem;font-weight:800}
+.iconbtn{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;padding:0;flex:none;border:1px solid var(--line);background:transparent;color:#d4ded4}
+.iconbtn.scan{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.icon{display:inline-block;position:relative;line-height:1}
+.lock-icon{width:14px;height:11px;border:1.6px solid currentColor;border-radius:3px;margin-top:4px}
+.lock-icon:before{content:"";position:absolute;top:-7px;left:2px;width:6px;height:7px;border:1.6px solid currentColor;border-bottom:0;border-radius:6px 6px 0 0}
+.scan-icon{width:18px;height:18px;display:grid;place-items:center;font:bold 18px/1 Consolas,monospace;border-radius:4px;background:linear-gradient(currentColor,currentColor) top left/6px 2px no-repeat,linear-gradient(currentColor,currentColor) top left/2px 6px no-repeat,linear-gradient(currentColor,currentColor) top right/6px 2px no-repeat,linear-gradient(currentColor,currentColor) top right/2px 6px no-repeat,linear-gradient(currentColor,currentColor) bottom left/6px 2px no-repeat,linear-gradient(currentColor,currentColor) bottom left/2px 6px no-repeat,linear-gradient(currentColor,currentColor) bottom right/6px 2px no-repeat,linear-gradient(currentColor,currentColor) bottom right/2px 6px no-repeat}
+.search-icon{width:12px;height:12px;border:1.6px solid currentColor;border-radius:50%;flex:none;margin-right:3px}
+.search-icon:after{content:"";position:absolute;right:-4px;bottom:-2px;width:6px;height:1.6px;background:currentColor;transform:rotate(46deg);border-radius:2px}
+.clock-icon{width:17px;height:17px;border:2px solid currentColor;border-radius:50%}
+.clock-icon:after{content:"";position:absolute;left:5px;top:2px;width:4px;height:5px;border-left:1.5px solid currentColor;border-bottom:1.5px solid currentColor}
+.key-icon{width:17px;height:18px;transform:rotate(-43deg)}
+.key-icon:before{content:"";position:absolute;left:0;top:5px;width:8px;height:8px;border-radius:50%;border:1.7px solid currentColor}
+.key-icon:after{content:"";position:absolute;left:8px;top:8px;width:10px;height:5px;background:linear-gradient(currentColor,currentColor) top/100% 2px no-repeat,linear-gradient(currentColor,currentColor) right top/2px 5px no-repeat,linear-gradient(currentColor,currentColor) center top/2px 4px no-repeat}
+.backup-icon{font-size:1.45rem;height:18px;line-height:.75}
+.intro h2{font-size:clamp(1.9rem,8vw,2.25rem);line-height:1.12;letter-spacing:-.04em;margin:0 0 9px}
+.intro p{margin:0;color:var(--muted);font-size:.9rem}
+.heading-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.searchbar{display:flex;align-items:center;gap:10px;margin:21px 0 20px}
+.searchbox{display:flex;align-items:center;gap:12px;height:49px;flex:1;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:0 16px;color:var(--muted)}
+.searchbox:focus-within{border-color:var(--accent)}
+.search{width:100%;height:100%;min-width:0;background:none;border:0;padding:0;outline:0;font-size:.9rem;color:var(--text)}
+.search::placeholder{color:var(--muted)}
+.cards{display:grid;gap:12px}.card{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px}
+.otp-card{display:grid;grid-template-columns:46px minmax(0,1fr) 45px;align-items:center;gap:14px;min-height:126px;padding:16px}
+.avatar{display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:#1d251e;border:1px solid #2a332a;color:var(--accent);font-size:1.16rem;font-weight:750}
+.otp-body{min-width:0}.otp-meta{display:flex;align-items:baseline;gap:7px;min-width:0;margin-bottom:5px}
+.issuer{font-weight:720;overflow-wrap:anywhere}.account{color:var(--muted);font-size:.84rem;overflow-wrap:anywhere}
+.otp-meta .issuer{flex:none;max-width:58%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.otp-meta .account{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;font-size:.78rem}
+.otp-copy{display:block;max-width:100%;border:0;border-radius:6px;background:none;padding:0;text-align:left}
+.code{display:block;font:700 clamp(1.55rem,8vw,2.3rem)/1.14 Consolas,ui-monospace,monospace;letter-spacing:.035em;white-space:nowrap}
+.code[data-digits="8"]{font-size:clamp(1.12rem,6.6vw,1.8rem)}
+.code-hint{display:block;color:var(--muted);font-size:.74rem;margin-top:7px}
+.countdown{width:45px;height:45px;display:grid;place-items:center;position:relative;isolation:isolate;border-radius:50%;color:var(--accent);font:700 .9rem Consolas,monospace}
+.countdown:before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:conic-gradient(from 4deg,var(--accent) var(--sweep,100%),#2d392d 0);mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2.5px))}
+.empty{border:1px dashed #424941;border-radius:16px;padding:25px 14px;text-align:center;color:var(--muted);font-size:.9rem}
+.empty strong{display:block;color:var(--text);margin-bottom:4px}
+.manual-button{display:block;margin:16px auto 0;padding:8px 13px;border:1px solid var(--line);border-radius:11px;background:none;color:var(--muted);font-size:.85rem}
+.bottom{position:fixed;inset:auto 0 0;background:var(--bg);border-top:1px solid var(--line);z-index:2}
+.nav-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding-top:9px;padding-bottom:calc(11px + env(safe-area-inset-bottom))}
+.nav-inner button{display:grid;justify-items:center;align-content:center;gap:5px;min-height:56px;background:none;color:var(--muted);border:0;border-radius:17px;font-size:.8rem}
+.nav-inner button[aria-current=page]{background:var(--selected);color:var(--accent);font-weight:700}
+.primary,.secondary,.danger,.copy{border-radius:11px;padding:10px 13px;border:1px solid var(--line);font-size:.88rem}
+.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:750}
+.secondary,.copy{background:#222923;color:var(--text)}.danger{background:#332123;border-color:#593538;color:#ffbac2}
+.cardtop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tag{color:var(--muted);font-size:.75rem;flex:none}.login-card .account{margin:4px 0}
+.login-value{overflow-wrap:anywhere;white-space:pre-wrap;font-family:Consolas,monospace}
+.login-actions,.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}.actions>*{flex:1}
+.backup-card{margin-top:21px}.backup-card h3{margin:0 0 6px;font-size:1rem}.backup-card p{margin:0;color:var(--muted);font-size:.9rem}
+.modal{position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;background:#070a08bf;z-index:5;padding:16px}
+.modal.show{display:flex}
+.dialog,.lockpanel{width:min(100%,420px);background:#1a201a;border:1px solid #3a463a;border-radius:20px;padding:21px}
+.dialog{max-height:calc(100dvh - 32px);overflow:auto;box-shadow:0 16px 55px #0009}
+.dialog h3,.lockpanel h2{margin:0 0 8px}.dialog p,.lockpanel p{color:var(--muted);font-size:.88rem;margin:0 0 12px}
+.field{display:block;margin:11px 0}.field span{display:block;margin-bottom:5px;color:var(--muted);font-size:.85rem}
+.field input{width:100%;min-width:0;background:#111611;border:1px solid #3c483c;border-radius:9px;padding:10px}.password-input-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
+.hint{color:var(--muted);font-size:.8rem!important}
+.scanbox{background:#101411;border:1px solid var(--line);border-radius:14px;overflow:hidden;min-height:170px;display:grid;place-items:center;margin:12px 0}
+.scanbox video{width:100%;max-height:280px;object-fit:cover}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translateX(-50%);width:max-content;max-width:calc(100% - 30px);background:var(--accent);color:var(--on-accent);padding:8px 13px;border-radius:14px;font-size:.84rem;font-weight:700;z-index:8;opacity:0;pointer-events:none}
+.toast.show{opacity:1}
+.lockwrap{min-height:100dvh;display:grid;place-items:center;padding-block:24px}
+.lockpanel .brand{margin-bottom:18px}
+@media(min-width:560px){.modal{align-items:center}.top{padding-top:20px;height:90px}.shell:not(.lockwrap){padding-top:23px}}
+@media(max-width:365px){.otp-card{gap:9px;padding-inline:11px}.otp-meta{gap:4px}.avatar{width:42px;height:42px}.otp-card{grid-template-columns:42px minmax(0,1fr) 42px}.countdown{width:42px;height:42px}}
 </style>
 </head>
 <body>
-<div id="app" class="shell">
-  <header class="top"><div class="brand"><div class="logo">N</div><div><h1>NOVA AUTH</h1><small>OFFLINE AUTHENTICATOR</small></div></div><button class="iconbtn" id="lockBtn" title="锁定" aria-label="锁定">⌑</button></header>
-  <section class="intro"><div class="eyebrow">YOUR CODES · YOUR DEVICE</div><h2>安全验证码</h2><p>动态口令每 30 秒自动更新。密钥只保存在本机加密保险库中。</p></section>
-  <div class="toolbar"><button class="primary" id="addBtn">＋ 添加账户</button><button class="secondary" id="scanBtn">▦ 扫描二维码</button></div>
-  <input class="search" id="search" placeholder="搜索账户或服务…" autocomplete="off">
+
+<header class="top hidden" id="vaultHeader">
+  <div class="brand"><span class="logo" aria-hidden="true">N</span><strong>NOVA</strong></div>
+  <button class="iconbtn" id="lockBtn" title="锁定保险库" aria-label="锁定保险库"><span class="icon lock-icon" aria-hidden="true"></span></button>
+</header>
+<main id="app" class="shell hidden" aria-labelledby="codesHeading">
+  <section class="intro"><h2 id="codesHeading">验证码</h2><p id="accountSummary"></p></section>
+  <div class="searchbar">
+    <label class="searchbox"><span class="icon search-icon" aria-hidden="true"></span><input class="search" id="search" type="search" aria-label="搜索服务或账户" placeholder="搜索服务或账户" autocomplete="off" spellcheck="false"></label>
+    <button class="iconbtn scan" id="scanBtn" title="扫描二维码" aria-label="扫描二维码"><span class="icon scan-icon" aria-hidden="true">+</span></button>
+  </div>
   <div class="cards" id="cards"></div>
-  <div class="notice">安全提示：这是首个测试版本。请先用非关键账户验证兼容性，并保留服务商提供的恢复码。不要把唯一的 2FA 密钥只存放在本应用中。</div>
-</div>
+  <button class="manual-button" id="addBtn">手动添加账户</button>
+</main>
 <section id="passwordArea" class="shell hidden" aria-labelledby="passwordHeading">
-  <div class="intro"><div class="cardtop"><h2 id="passwordHeading">密码管理器</h2><button class="secondary" id="lockPasswords">锁定</button></div><p>在本机加密保险库中保存网站和应用的登录凭据。</p></div>
-  <div class="toolbar"><button class="primary" id="addLogin">＋ 添加登录凭据</button></div>
-  <input class="search" id="loginSearch" type="search" aria-label="搜索登录凭据" placeholder="搜索名称、网址或用户名…" autocomplete="off" spellcheck="false">
+  <div class="intro heading-row"><div><h2 id="passwordHeading">密码保险库</h2><p>网站与应用登录凭据</p></div><button class="primary" id="addLogin">新增密码</button></div>
+  <div class="searchbar"><label class="searchbox"><span class="icon search-icon" aria-hidden="true"></span><input class="search" id="loginSearch" type="search" aria-label="搜索登录凭据" placeholder="搜索网站或用户名" autocomplete="off" spellcheck="false"></label></div>
   <div class="cards" id="loginCards"></div>
 </section>
 <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle"><div class="dialog">
@@ -52,12 +133,29 @@ button,input{font:inherit}button{cursor:pointer}.shell{max-width:620px;margin:au
     <div class="actions"><button type="button" class="secondary" data-close="loginModal">取消</button><button type="submit" class="primary">保存凭据</button></div>
   </form>
 </div></div>
-<div id="lockScreen" class="shell lockwrap hidden"><div class="lockpanel"><div class="logo">N</div><div class="eyebrow">NOVA AUTHENTICATOR</div><h2 id="lockTitle">创建加密保险库</h2><p id="lockDesc">设置一个强密码，用于加密本机保存的验证器密钥与登录凭据。密码遗失后无法恢复。</p><form id="unlockForm"><label class="field"><span>保险库密码</span><input id="pass" type="password" minlength="10" autocomplete="current-password" required placeholder="至少 10 位，建议使用长密码"></label><label class="field hidden" id="confirmWrap"><span>再次输入密码</span><input id="confirm" type="password" minlength="10" autocomplete="new-password"></label><button class="primary" style="width:100%" id="unlockSubmit">创建保险库</button></form><p class="hint" style="margin-top:14px">加密方式：PBKDF2-SHA-256 + AES-256-GCM。密码不会上传，也不会明文保存。</p></div></div>
+<div id="lockScreen" class="shell lockwrap hidden"><div class="lockpanel"><div class="brand"><span class="logo" aria-hidden="true">N</span><strong>NOVA</strong></div><h2 id="lockTitle">创建加密保险库</h2><p id="lockDesc">设置一个强密码，用于加密本机保存的验证器密钥与登录凭据。密码遗失后无法恢复。</p><form id="unlockForm"><label class="field"><span>保险库密码</span><input id="pass" type="password" minlength="10" autocomplete="current-password" required placeholder="至少 10 位，建议使用长密码"></label><label class="field hidden" id="confirmWrap"><span>再次输入密码</span><input id="confirm" type="password" minlength="10" autocomplete="new-password"></label><button class="primary" style="width:100%" id="unlockSubmit">创建保险库</button></form><p class="hint" style="margin-top:14px">加密方式：PBKDF2-SHA-256 + AES-256-GCM。密码不会上传，也不会明文保存。</p></div></div>
 <div class="modal" id="addModal"><div class="dialog"><h3>添加验证账户</h3><p>可以粘贴 otpauth:// 链接，或手动填写服务和密钥。</p><label class="field"><span>二维码配置链接（可选）</span><input id="otpauth" placeholder="otpauth://totp/…"></label><div style="text-align:center;color:#71849d;font-size:11px">或手动输入</div><label class="field"><span>服务名称</span><input id="issuer" placeholder="例如 GitHub"></label><label class="field"><span>账户名称</span><input id="label" placeholder="例如 name@example.com"></label><label class="field"><span>Secret 密钥（Base32）</span><input id="secret" autocapitalize="characters" spellcheck="false" placeholder="JBSWY3DPEHPK3PXP"></label><p class="hint">默认使用 6 位、30 秒、SHA-1。支持标准 TOTP 配置链接。</p><div class="actions"><button class="secondary" data-close="addModal">取消</button><button class="primary" id="saveAccount">保存账户</button></div></div></div>
 <div class="modal" id="scanModal"><div class="dialog"><h3>扫描二维码</h3><p>将相机对准网站提供的身份验证二维码。若设备浏览器不支持实时扫码，可使用手动输入或粘贴配置链接。</p><div class="scanbox" id="scanbox"><span style="padding:18px;text-align:center;color:#8da0bb;font-size:12px">正在准备相机…</span></div><p id="scanStatus" class="hint">相机仅在本机浏览器中使用，不会上传画面。</p><div class="actions"><button class="secondary" data-close="scanModal">关闭</button><button class="primary" id="manualFromScan">手动添加</button></div></div></div>
-<div class="modal" id="settingsModal"><div class="dialog"><h3>保险库与备份</h3><p>导出的文件仍然是加密状态。恢复时需要原保险库密码。</p><div class="actions"><button class="secondary" id="exportBtn">导出加密备份</button><button class="secondary" id="importBtn">导入备份</button></div><input id="importFile" class="hidden" type="file" accept="application/json,.json"><div class="actions"><button class="danger" id="wipeBtn">删除本机保险库</button><button class="primary" data-close="settingsModal">完成</button></div><p class="hint" style="margin-top:15px">删除保险库不会删除你在网站上的 2FA 设置。请确保已安全备份，并保留各服务的恢复码。</p></div></div>
-<div class="toast" id="toast"></div>
-<nav class="bottom"><button class="active" id="homeNav">◫ 验证码</button><button id="passwordNav" aria-pressed="false" disabled>密码管理器</button><button id="settingsNav">⚙ 保险库设置</button></nav>
+
+<section class="shell hidden" id="backupArea" aria-labelledby="backupHeading">
+  <div class="intro"><h2 id="backupHeading">加密备份</h2><p>迁移或恢复保险库</p></div>
+  <article class="card backup-card">
+    <h3>保险库备份</h3><p>导出文件仍然加密。导入会替换本机保险库，恢复时需要原备份密码。</p>
+    <div class="actions"><button class="primary" id="importBtn">导入加密备份</button><button class="secondary" id="exportBtn">导出加密备份</button></div>
+    <input id="importFile" class="hidden" type="file" accept="application/json,.json">
+  </article>
+  <article class="card backup-card">
+    <h3>删除本机数据</h3><p>删除后需要加密备份才能恢复。</p>
+    <div class="actions"><button class="danger" id="wipeBtn">删除本机保险库</button></div>
+  </article>
+</section>
+<div class="toast" id="toast" role="status"></div>
+<nav class="bottom hidden" id="vaultNav" aria-label="主导航"><div class="nav-inner">
+  <button id="homeNav" aria-current="page"><span class="icon clock-icon" aria-hidden="true"></span>验证码</button>
+  <button id="passwordNav" disabled><span class="icon key-icon" aria-hidden="true"></span>密码</button>
+  <button id="settingsNav"><span class="icon backup-icon" aria-hidden="true">⇄</span>备份</button>
+</div></nav>
+<script src="./vendor/jsQR.js"></script>
 <script>
 const STORE='nova-auth-v1';
 let vault=null,accounts=[],logins=[],key=null,savedVault=null,vaultBusy=false,session=0,lastActivity=Date.now(),scanStream=null,scanFrame=0;
@@ -97,14 +195,15 @@ async function persist(nextAccounts,nextLogins,pass=key){
   accounts=nextAccounts;
   logins=nextLogins;
 }
-function showLock(isNew){resetSession();$('app').classList.add('hidden');$('lockScreen').classList.remove('hidden');$('lockTitle').textContent=isNew?'创建加密保险库':'解锁 NOVA';$('lockDesc').textContent=isNew?'设置一个强密码，用于加密本机保存的验证器密钥。密码遗失后无法恢复。':'输入保险库密码以解锁本机账户。';$('confirmWrap').classList.toggle('hidden',!isNew);$('unlockSubmit').textContent=isNew?'创建保险库':'解锁';$('pass').value='';$('confirm').value='';$('pass').focus()}
+function showLock(isNew){resetSession();$('app').classList.add('hidden');$('lockScreen').classList.remove('hidden');$('lockTitle').textContent=isNew?'创建加密保险库':'解锁 NOVA';$('lockDesc').textContent=isNew?'设置一个强密码，用于加密本机保存的验证器密钥和登录凭据。密码遗失后无法恢复。':'输入保险库密码以解锁本机验证码和登录凭据。';$('confirmWrap').classList.toggle('hidden',!isNew);$('unlockSubmit').textContent=isNew?'创建保险库':'解锁';$('pass').value='';$('confirm').value='';$('pass').focus()}
 function unlock(){
   lastActivity=Date.now();
   $('lockScreen').classList.add('hidden');
   $('pass').value=$('confirm').value='';
   $('passwordNav').disabled=false;
-  switchArea(false);
-  tick();
+  $('vaultHeader').classList.remove('hidden');
+  $('vaultNav').classList.remove('hidden');
+  switchArea('codes');
 }
 $('unlockForm').addEventListener('submit',e=>{
   e.preventDefault();
@@ -137,11 +236,70 @@ $('unlockForm').addEventListener('submit',e=>{
 });
 function base32(s){s=s.toUpperCase().replace(/[\s=-]/g,'');if(!s||!/^[A-Z2-7]+$/.test(s))throw Error('Secret 不是有效的 Base32 密钥');let bits='',out=[];for(const c of s){const v=b32chars.indexOf(c);if(v<0)throw Error('Secret 不是有效的 Base32 密钥');bits+=v.toString(2).padStart(5,'0')}for(let i=0;i+8<=bits.length;i+=8)out.push(parseInt(bits.slice(i,i+8),2));return new Uint8Array(out)}
 function parseOtp(uri){const u=new URL(uri.trim());if(u.protocol!=='otpauth:'||u.hostname!=='totp')throw Error('只支持 TOTP 二维码（otpauth://totp/）');const q=u.searchParams,raw=decodeURIComponent(u.pathname.slice(1)),parts=raw.split(':');return {issuer:q.get('issuer')||parts[0]||'账户',label:parts.length>1?parts.slice(1).join(':'):parts[0],secret:q.get('secret')||'',digits:Number(q.get('digits')||6),period:Number(q.get('period')||30),algorithm:(q.get('algorithm')||'SHA1').toUpperCase()}}
-async function codeFor(a){const counter=Math.floor(Date.now()/1000/a.period),msg=new Uint8Array(8);let n=counter;for(let i=7;i>=0;i--){msg[i]=n&255;n=Math.floor(n/256)}const algo={'SHA1':'SHA-1','SHA256':'SHA-256','SHA512':'SHA-512'}[a.algorithm];if(!algo)throw Error('不支持的算法');const k=await crypto.subtle.importKey('raw',base32(a.secret),{name:'HMAC',hash:algo},false,['sign']);const h=new Uint8Array(await crypto.subtle.sign('HMAC',k,msg)),o=h[h.length-1]&15;const bin=((h[o]&127)<<24)|(h[o+1]<<16)|(h[o+2]<<8)|h[o+3];return String(bin%10**a.digits).padStart(a.digits,'0')}
+async function codeFor(a,seconds=Math.floor(Date.now()/1000)){const counter=Math.floor(seconds/a.period),msg=new Uint8Array(8);let n=counter;for(let i=7;i>=0;i--){msg[i]=n&255;n=Math.floor(n/256)}const algo={'SHA1':'SHA-1','SHA256':'SHA-256','SHA512':'SHA-512'}[a.algorithm];if(!algo)throw Error('不支持的算法');const k=await crypto.subtle.importKey('raw',base32(a.secret),{name:'HMAC',hash:algo},false,['sign']);const h=new Uint8Array(await crypto.subtle.sign('HMAC',k,msg)),o=h[h.length-1]&15;const bin=((h[o]&127)<<24)|(h[o+1]<<16)|(h[o+2]<<8)|h[o+3];return String(bin%10**a.digits).padStart(a.digits,'0')}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-async function render(){const q=$('search').value.toLowerCase();const list=accounts.filter(a=>(a.issuer+' '+a.label).toLowerCase().includes(q));if(!list.length){$('cards').innerHTML='<div class="empty"><strong>'+(accounts.length?'没有找到匹配账户':'你的保险库还是空的')+'</strong>'+(accounts.length?'试试其他搜索词。':'添加第一个账户，动态验证码就会出现在这里。')+'</div>';return}const now=Math.floor(Date.now()/1000);$('cards').innerHTML=list.map((a)=>{const remain=a.period-now%a.period;return '<article class="card" data-id="'+escapeHtml(a.id)+'"><div class="cardtop"><div><div class="issuer">'+escapeHtml(a.issuer)+'</div><div class="account">'+escapeHtml(a.label)+'</div></div><span class="tag">TOTP</span></div><div class="code-row"><div class="code">••• •••</div><button class="copy" data-copy="'+escapeHtml(a.id)+'">复制</button></div><div class="progress"><span style="width:'+(remain/a.period*100)+'%"></span></div><div class="cardfoot"><span>动态验证码</span><span class="remaining">'+remain+' 秒后更新</span></div></article>'}).join('');for(const a of list){const card=document.querySelector('[data-id="'+CSS.escape(a.id)+'"]');if(!card)continue;try{const c=await codeFor(a);card.querySelector('.code').textContent=c.slice(0,3)+' '+c.slice(3);card.querySelector('.code').dataset.value=c}catch(e){card.querySelector('.code').textContent='密钥无效'}}}
-let renderBusy=false;async function tick(){if(renderBusy)return;renderBusy=true;const now=Math.floor(Date.now()/1000);for(const a of accounts){const card=document.querySelector('[data-id="'+CSS.escape(a.id)+'"]');if(!card)continue;const rem=a.period-now%a.period;card.querySelector('.remaining').textContent=rem+' 秒后更新';card.querySelector('.progress span').style.width=(rem/a.period*100)+'%';if(rem===a.period-1||!card.querySelector('.code').dataset.value){try{const c=await codeFor(a);card.querySelector('.code').textContent=c.slice(0,3)+' '+c.slice(3);card.querySelector('.code').dataset.value=c}catch(e){}}}renderBusy=false}
-$('cards').addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(!b)return;const c=b.closest('.card').querySelector('.code').dataset.value;if(!c)return;try{await navigator.clipboard.writeText(c);toast('验证码已复制')}catch{toast('复制失败，请手动选择验证码')}});
+function render(){
+  const query=$('search').value.trim().toLowerCase();
+  const list=accounts.filter(a=>(a.issuer+' '+a.label).toLowerCase().includes(query));
+  const interval=accounts.every(a=>a.period===30)?'每 30 秒刷新':'按账户周期刷新';
+  $('accountSummary').textContent=accounts.length+' 个账户'+(accounts.length?' · '+interval:'');
+  if(!list.length){
+    $('cards').innerHTML='<div class="empty"><strong>'+(accounts.length?'没有找到匹配账户':'还没有验证码账户')+'</strong>'+
+      (accounts.length?'试试其他搜索词。':'扫描二维码或手动添加第一个账户。')+'</div>';
+    return;
+  }
+  $('cards').innerHTML=list.map(a=>{
+    const service=a.issuer||'账户';
+    const badge=Array.from(service.trim())[0]||'N';
+    return '<article class="card otp-card" data-id="'+escapeHtml(a.id)+'">'+
+      '<span class="avatar" aria-hidden="true">'+escapeHtml(badge.toUpperCase())+'</span>'+
+      '<div class="otp-body"><div class="otp-meta"><span class="issuer" title="'+escapeHtml(service)+'">'+escapeHtml(service)+'</span>'+
+      '<span class="account" title="'+escapeHtml(a.label)+'">'+escapeHtml(a.label)+'</span></div>'+
+      '<button class="otp-copy" data-copy="'+escapeHtml(a.id)+'" aria-label="复制 '+escapeHtml(service)+' 验证码">'+
+      '<span class="code" data-digits="'+escapeHtml(a.digits)+'">••• •••</span><span class="code-hint">点按验证码即可复制</span></button></div>'+
+      '<span class="countdown" title="距下次刷新剩余秒数"><span class="remaining"></span></span></article>';
+  }).join('');
+  tick();
+}
+let renderBusy=false;
+async function tick(){
+  if(renderBusy||!key)return;
+  renderBusy=true;
+  const now=Math.floor(Date.now()/1000);
+  const generation=session;
+  try{
+    for(const account of accounts){
+      if(generation!==session)return;
+      const card=document.querySelector('[data-id="'+CSS.escape(account.id)+'"]');
+      if(!card)continue;
+      const remaining=account.period-now%account.period;
+      card.querySelector('.remaining').textContent=remaining;
+      card.querySelector('.countdown').style.setProperty('--sweep',(remaining/account.period*100)+'%');
+      const code=card.querySelector('.code');
+      const counter=String(Math.floor(now/account.period));
+      if(code.dataset.counter===counter)continue;
+      try{
+        const value=await codeFor(account,now);
+        if(generation!==session)return;
+        const half=value.length/2;
+        code.textContent=value.slice(0,half)+' '+value.slice(half);
+      }catch{code.textContent='密钥无效'}
+      code.dataset.counter=counter;
+    }
+  }finally{renderBusy=false}
+}
+$('cards').addEventListener('click',async e=>{
+  const button=e.target.closest('[data-copy]');
+  const account=button&&accounts.find(item=>item.id===button.dataset.copy);
+  if(!key||!account)return;
+  const generation=session;
+  try{
+    const code=await codeFor(account);
+    if(generation!==session)return;
+    await navigator.clipboard.writeText(code);
+    toast('验证码已复制');
+  }catch{if(generation===session)toast('复制失败，请检查浏览器剪贴板权限')}
+});
 const MASK='••••••••';
 let editingLogin=null, revealTimer=0, draftTimer=0;
 function hidePasswords(){
@@ -169,26 +327,24 @@ function resetSession(){
   savedVault=null;
   accounts=[];
   logins=[];
-  for(const id of ['loginModal','addModal','scanModal','settingsModal'])closeModal(id);
+  for(const id of ['loginModal','addModal','scanModal'])closeModal(id);
   for(const id of ['otpauth','issuer','label','secret','search','loginSearch'])$(id).value='';
   $('cards').replaceChildren();
   $('loginCards').replaceChildren();
-  $('passwordArea').classList.add('hidden');
+
+  for(const id of ['passwordArea','backupArea','vaultHeader','vaultNav'])$(id).classList.add('hidden');
   $('passwordNav').disabled=true;
-  $('passwordNav').classList.remove('active');
-  $('passwordNav').setAttribute('aria-pressed','false');
-  $('homeNav').classList.add('active');
 }
-function switchArea(passwords){
+function switchArea(area){
   if(!key)return;
-  for(const id of ['loginModal','addModal','scanModal','settingsModal'])closeModal(id);
-  $('app').classList.toggle('hidden',passwords);
-  $('passwordArea').classList.toggle('hidden',!passwords);
-  $('homeNav').classList.toggle('active',!passwords);
-  $('passwordNav').classList.toggle('active',passwords);
-  $('passwordNav').setAttribute('aria-pressed',String(passwords));
-  if(passwords)renderLogins();
-  else render();
+  for(const id of ['loginModal','addModal','scanModal'])closeModal(id);
+  const pages=[['codes','app','homeNav'],['passwords','passwordArea','passwordNav'],['backups','backupArea','settingsNav']];
+  for(const [name,panel,button] of pages){
+    $(panel).classList.toggle('hidden',name!==area);
+    $(button).setAttribute('aria-current',name===area?'page':'false');
+  }
+  if(area==='passwords')renderLogins();
+  if(area==='codes')render();
 }
 function generatePassword(){
   const alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*_-+=';
@@ -239,7 +395,6 @@ function editLogin(login){
   $('siteName').focus();
 }
 $('addLogin').onclick=()=>editLogin();
-$('lockPasswords').onclick=()=>$('lockBtn').click();
 $('loginSearch').oninput=renderLogins;
 $('generatePassword').onclick=()=>{
   if(!key)return;
@@ -314,11 +469,74 @@ $('addBtn').onclick=()=>openModal('addModal');$('search').oninput=render;
 $('saveAccount').onclick=()=>{const generation=session;writeVault(async()=>{if(!key||generation!==session)return;try{let a;if($('otpauth').value.trim()){a=parseOtp($('otpauth').value)}else{a={issuer:$('issuer').value.trim()||'账户',label:$('label').value.trim()||'默认账户',secret:$('secret').value.trim(),digits:6,period:30,algorithm:'SHA1'}};base32(a.secret);if(![6,8].includes(a.digits)||a.period<10||a.period>120)throw Error('二维码参数不受支持');a.id=crypto.randomUUID();await codeFor(a);if(generation!==session)return;await persist([...accounts,a],logins);$('otpauth').value=$('issuer').value=$('label').value=$('secret').value='';closeModal('addModal');render();toast('账户已加密保存')}catch(e){toast(e.message||'添加失败')}})};
 $('scanBtn').onclick=async()=>{openModal('scanModal');await startScan()};
 $('manualFromScan').onclick=()=>{stopScan();closeModal('scanModal');openModal('addModal')};
-async function startScan(){const box=$('scanbox');if(!('BarcodeDetector'in window)){box.innerHTML='<span style="padding:18px;text-align:center;color:#aabbd0;font-size:12px">当前浏览器暂不支持内置二维码识别。请点击“手动添加”，或粘贴二维码配置链接。</span>';$('scanStatus').textContent='iPhone 浏览器可使用手动输入；后续可接入兼容扫码组件。';return}try{const detector=new BarcodeDetector({formats:['qr_code']});const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});if(!key||!$('scanModal').classList.contains('show')){stream.getTracks().forEach(track=>track.stop());return}scanStream=stream;box.innerHTML='<video id="scanVideo" autoplay muted playsinline></video>';const video=$('scanVideo');video.srcObject=scanStream;await video.play();$('scanStatus').textContent='请将二维码放入画面中央。';const loop=async()=>{if(!scanStream)return;try{const found=await detector.detect(video);if(!scanStream||video.srcObject!==scanStream)return;if(found.length){const raw=found[0].rawValue;if(raw.startsWith('otpauth://')){$('otpauth').value=raw;stopScan();closeModal('scanModal');openModal('addModal');toast('二维码读取成功，请确认后保存');return}}}catch{}scanFrame=requestAnimationFrame(loop)};loop()}catch(e){box.innerHTML='<span style="padding:18px;text-align:center;color:#aabbd0;font-size:12px">无法打开相机。请检查浏览器相机权限，或使用手动输入。</span>';$('scanStatus').textContent='相机需要 HTTPS 和浏览器授权。'}}
-function stopScan(){if(scanFrame)cancelAnimationFrame(scanFrame);if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null}}
-$('settingsNav').onclick=()=>{hidePasswords();openModal('settingsModal')};
-$('homeNav').onclick=()=>switchArea(false);
-$('passwordNav').onclick=()=>switchArea(true);
+let scanVersion=0;
+async function startScan(){
+  const version=++scanVersion;
+  const box=$('scanbox');
+  const status=$('scanStatus');
+  box.textContent='正在准备相机…';
+  status.textContent='相机画面仅在本机浏览器中识别。';
+  const active=()=>version===scanVersion&&key&&!document.hidden&&$('scanModal').classList.contains('show');
+  if(typeof jsQR!=='function'||!navigator.mediaDevices?.getUserMedia){
+    box.textContent='此浏览器无法启用扫码。';
+    status.textContent='请使用手动输入或粘贴配置链接。';
+    return;
+  }
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+    if(!active()){stream.getTracks().forEach(track=>track.stop());return}
+    scanStream=stream;
+    const video=document.createElement('video');
+    video.muted=true;
+    video.playsInline=true;
+    video.srcObject=stream;
+    box.replaceChildren(video);
+    await video.play();
+    if(!active())return;
+    status.textContent='请将验证器二维码放在画面中央。';
+    const canvas=document.createElement('canvas');
+    const ctx=canvas.getContext('2d',{willReadFrequently:true});
+    let lastFrame=-Infinity;
+    function frame(time){
+      if(!active())return;
+      if(time-lastFrame>=150&&video.readyState>=2){
+        lastFrame=time;
+        const scale=Math.min(1,640/Math.max(video.videoWidth,video.videoHeight));
+        canvas.width=Math.max(1,Math.round(video.videoWidth*scale));
+        canvas.height=Math.max(1,Math.round(video.videoHeight*scale));
+        ctx.drawImage(video,0,0,canvas.width,canvas.height);
+        const pixels=ctx.getImageData(0,0,canvas.width,canvas.height);
+        const found=jsQR(pixels.data,pixels.width,pixels.height);
+        if(found?.data){
+          try{
+            parseOtp(found.data);
+            $('otpauth').value=found.data;
+            closeModal('scanModal');
+            openModal('addModal');
+            toast('二维码读取成功，请确认后保存');
+            return;
+          }catch{status.textContent='请使用服务商提供的 TOTP 验证器二维码。'}
+        }
+      }
+      scanFrame=requestAnimationFrame(frame);
+    }
+    scanFrame=requestAnimationFrame(frame);
+  }catch{
+    if(!active())return;
+    stopScan();
+    box.textContent='无法打开相机。';
+    status.textContent='请检查相机权限，或使用手动添加。';
+  }
+}
+function stopScan(){
+  scanVersion++;
+  if(scanFrame){cancelAnimationFrame(scanFrame);scanFrame=0}
+  if(scanStream){scanStream.getTracks().forEach(track=>track.stop());scanStream=null}
+  $('scanbox').replaceChildren();
+}
+$('settingsNav').onclick=()=>switchArea('backups');
+$('homeNav').onclick=()=>switchArea('codes');
+$('passwordNav').onclick=()=>switchArea('passwords');
 $('lockBtn').onclick=()=>showLock(localStorage.getItem(STORE)===null);
 $('exportBtn').onclick=()=>{if(!key||!vault)return;const blob=new Blob([JSON.stringify(vault,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='nova-auth-encrypted-backup.json';a.click();URL.revokeObjectURL(url);toast('已导出加密备份')};
 $('importBtn').onclick=()=>$('importFile').click();
@@ -359,7 +577,7 @@ document.addEventListener('keydown',e=>{
   lastActivity=Date.now();
   if(e.key==='Escape'){
     hidePasswords();
-    if($('loginModal').classList.contains('show'))closeModal('loginModal');
+    for(const id of ['loginModal','addModal','scanModal'])if($(id).classList.contains('show'))closeModal(id);
   }
 });
 document.addEventListener('visibilitychange',()=>{
@@ -374,7 +592,7 @@ setInterval(()=>{
   else if(!document.hidden&&!$('app').classList.contains('hidden'))tick();
 },1000);
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-if(!crypto.subtle||!window.isSecureContext){$('lockScreen').classList.remove('hidden');$('app').classList.add('hidden');$('lockTitle').textContent='需要安全连接';$('lockDesc').textContent='请通过 GitHub Pages 的 HTTPS 地址打开本应用。';$('unlockForm').classList.add('hidden')}else showLock(!localStorage.getItem(STORE));
+if(!crypto.subtle||!window.isSecureContext){$('lockScreen').classList.remove('hidden');$('app').classList.add('hidden');$('lockTitle').textContent='需要安全连接';$('lockDesc').textContent='请使用 HTTPS 或 localhost 打开本应用。';$('unlockForm').classList.add('hidden')}else showLock(!localStorage.getItem(STORE));
 </script>
 </body>
 </html>
