@@ -20,10 +20,19 @@ function element(id){
 const html=readFileSync('index.html','utf8');
 const source=html.split('<script>')[1].split('</script>')[0];
 let blob=null, failWrite=false, copied, timer;
+const settings=new Map();
 const context=vm.createContext({
-  crypto:webcrypto, TextEncoder, TextDecoder, btoa, atob, URL, CSS:{escape:String},
+  crypto:webcrypto, TextEncoder, TextDecoder, btoa, atob, URL, AbortController, DOMException, CSS:{escape:String},
   navigator:{clipboard:{writeText:async value=>{copied=value}}},
-  localStorage:{getItem:()=>blob,setItem:(_,data)=>{if(failWrite)throw Error();blob=data}},
+  localStorage:{
+    getItem:id=>id==='nova-auth-v1'?blob:settings.get(id)??null,
+    setItem:(id,data)=>{
+      if(failWrite)throw Error();
+      if(id==='nova-auth-v1')blob=data;
+      else settings.set(id,data);
+    },
+    removeItem:id=>{if(id==='nova-auth-v1')blob=null;else settings.delete(id);}
+  },
   document:{getElementById:element,querySelector:()=>null,querySelectorAll:()=>[],addEventListener:(name,fn)=>listeners[name]=fn},
   window:{isSecureContext:true,addEventListener:(name,fn)=>listeners[name]=fn},
   setInterval(){},setTimeout(fn,ms){if(ms===15000)timer=fn;return 1},clearTimeout(){},confirm:()=>true
@@ -115,5 +124,39 @@ async function submit(){element('loginForm').onsubmit({preventDefault(){}});awai
   assert.notEqual(blob,updated);
   await assert.rejects(run('decryptData(vault,"incorrect-password")'));
   assert.throws(()=>run('readPayload({schema:99,accounts:[],logins:[]})'));
-  console.log('PASS: legacy migration, TOTP, encryption, failed writes, add, edit, search, mask, reveal timeout, copy, lock, reload, delete');
+  const beforePasskey=blob;
+  const fakeId=Uint8Array.of(1,2,3).buffer;
+  let seed=37;
+  context.PublicKeyCredential=function(){};
+  context.navigator.credentials={
+    create:async ({publicKey})=>{
+      assert.equal(publicKey.authenticatorSelection.userVerification,'required');
+      return {rawId:fakeId,getClientExtensionResults:()=>({prf:{enabled:true}})};
+    },
+    get:async ({publicKey})=>{
+      assert.equal(publicKey.userVerification,'required');
+      assert.equal(publicKey.extensions.prf.eval.first.length,32);
+      return {
+        rawId:fakeId,
+        getClientExtensionResults:()=>({prf:{results:{first:new Uint8Array(32).fill(seed).buffer}}})
+      };
+    }
+  };
+  await element('passkeyEnable').onclick();
+  const fastUnlock=settings.get('nova-auth-passkey-v1');
+  assert.ok(fastUnlock);
+  assert.ok(!fastUnlock.includes('master-password'));
+  assert.equal(blob,beforePasskey);
+  element('lockBtn').onclick();
+  seed=38;
+  await element('passkeyUnlock').onclick();
+  assert.equal(run('key'),null);
+  seed=37;
+  await element('passkeyUnlock').onclick();
+  assert.equal(run('accounts.length'),1);
+  element('passkeyDisable').onclick();
+  await idle();
+  assert.equal(settings.has('nova-auth-passkey-v1'),false);
+  assert.equal(blob,beforePasskey);
+  console.log('PASS: WebAuthn wrapper and wrong key rejection, legacy migration, TOTP, encryption, failed writes, add, edit, search, mask, reveal timeout, copy, lock, reload, delete');
 })().catch(error=>{console.error(error);process.exitCode=1});

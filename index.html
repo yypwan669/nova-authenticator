@@ -91,6 +91,7 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{op
 .toast.show{opacity:1}
 .lockwrap{min-height:100dvh;display:grid;place-items:center;padding-block:24px}
 .lockpanel .brand{margin-bottom:18px}
+.passkey-unlock{width:100%;margin:0 0 12px}.passkey-options .actions>*{flex:none}
 @media(min-width:560px){.modal{align-items:center}.top{padding-top:20px;height:90px}.shell:not(.lockwrap){padding-top:23px}}
 @media(max-width:365px){.otp-card{gap:9px;padding-inline:11px}.otp-meta{gap:4px}.avatar{width:42px;height:42px}.otp-card{grid-template-columns:42px minmax(0,1fr) 42px}.countdown{width:42px;height:42px}}
 </style>
@@ -133,7 +134,7 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{op
     <div class="actions"><button type="button" class="secondary" data-close="loginModal">取消</button><button type="submit" class="primary">保存凭据</button></div>
   </form>
 </div></div>
-<div id="lockScreen" class="shell lockwrap hidden"><div class="lockpanel"><div class="brand"><span class="logo" aria-hidden="true">N</span><strong>NOVA</strong></div><h2 id="lockTitle">创建加密保险库</h2><p id="lockDesc">设置一个强密码，用于加密本机保存的验证器密钥与登录凭据。密码遗失后无法恢复。</p><form id="unlockForm"><label class="field"><span>保险库密码</span><input id="pass" type="password" minlength="10" autocomplete="current-password" required placeholder="至少 10 位，建议使用长密码"></label><label class="field hidden" id="confirmWrap"><span>再次输入密码</span><input id="confirm" type="password" minlength="10" autocomplete="new-password"></label><button class="primary" style="width:100%" id="unlockSubmit">创建保险库</button></form><p class="hint" style="margin-top:14px">加密方式：PBKDF2-SHA-256 + AES-256-GCM。密码不会上传，也不会明文保存。</p></div></div>
+<div id="lockScreen" class="shell lockwrap hidden"><div class="lockpanel"><div class="brand"><span class="logo" aria-hidden="true">N</span><strong>NOVA</strong></div><h2 id="lockTitle">创建加密保险库</h2><p id="lockDesc">设置一个强密码，用于加密本机保存的验证器密钥与登录凭据。密码遗失后无法恢复。</p><button class="primary passkey-unlock hidden" type="button" id="passkeyUnlock">使用通行密钥解锁</button><form id="unlockForm"><label class="field"><span>保险库密码</span><input id="pass" type="password" minlength="10" autocomplete="current-password" required placeholder="至少 10 位，建议使用长密码"></label><label class="field hidden" id="confirmWrap"><span>再次输入密码</span><input id="confirm" type="password" minlength="10" autocomplete="new-password"></label><button class="primary" style="width:100%" id="unlockSubmit">创建保险库</button></form><p class="hint" style="margin-top:14px">加密方式：PBKDF2-SHA-256 + AES-256-GCM。密码不会上传，也不会明文保存。</p></div></div>
 <div class="modal" id="addModal"><div class="dialog"><h3>添加验证账户</h3><p>可以粘贴 otpauth:// 链接，或手动填写服务和密钥。</p><label class="field"><span>二维码配置链接（可选）</span><input id="otpauth" placeholder="otpauth://totp/…"></label><div style="text-align:center;color:#71849d;font-size:11px">或手动输入</div><label class="field"><span>服务名称</span><input id="issuer" placeholder="例如 GitHub"></label><label class="field"><span>账户名称</span><input id="label" placeholder="例如 name@example.com"></label><label class="field"><span>Secret 密钥（Base32）</span><input id="secret" autocapitalize="characters" spellcheck="false" placeholder="JBSWY3DPEHPK3PXP"></label><p class="hint">默认使用 6 位、30 秒、SHA-1。支持标准 TOTP 配置链接。</p><div class="actions"><button class="secondary" data-close="addModal">取消</button><button class="primary" id="saveAccount">保存账户</button></div></div></div>
 <div class="modal" id="scanModal"><div class="dialog"><h3>扫描二维码</h3><p>将相机对准网站提供的身份验证二维码。若设备浏览器不支持实时扫码，可使用手动输入或粘贴配置链接。</p><div class="scanbox" id="scanbox"><span style="padding:18px;text-align:center;color:#8da0bb;font-size:12px">正在准备相机…</span></div><p id="scanStatus" class="hint">相机仅在本机浏览器中使用，不会上传画面。</p><div class="actions"><button class="secondary" data-close="scanModal">关闭</button><button class="primary" id="manualFromScan">手动添加</button></div></div></div>
 
@@ -143,6 +144,14 @@ button,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{op
     <h3>保险库备份</h3><p>导出文件仍然加密。导入会替换本机保险库，恢复时需要原备份密码。</p>
     <div class="actions"><button class="primary" id="importBtn">导入加密备份</button><button class="secondary" id="exportBtn">导出加密备份</button></div>
     <input id="importFile" class="hidden" type="file" accept="application/json,.json">
+  </article>
+  <article class="card backup-card passkey-options">
+    <h3>通行密钥</h3>
+    <p id="passkeyStatus"></p>
+    <div class="actions">
+      <button class="secondary hidden" type="button" id="passkeyEnable">启用通行密钥</button>
+      <button class="secondary hidden" type="button" id="passkeyDisable">停用通行密钥</button>
+    </div>
   </article>
   <article class="card backup-card">
     <h3>删除本机数据</h3><p>删除后需要加密备份才能恢复。</p>
@@ -195,8 +204,20 @@ async function persist(nextAccounts,nextLogins,pass=key){
   accounts=nextAccounts;
   logins=nextLogins;
 }
-function showLock(isNew){resetSession();$('app').classList.add('hidden');$('lockScreen').classList.remove('hidden');$('lockTitle').textContent=isNew?'创建加密保险库':'解锁 NOVA';$('lockDesc').textContent=isNew?'设置一个强密码，用于加密本机保存的验证器密钥和登录凭据。密码遗失后无法恢复。':'输入保险库密码以解锁本机验证码和登录凭据。';$('confirmWrap').classList.toggle('hidden',!isNew);$('unlockSubmit').textContent=isNew?'创建保险库':'解锁';$('pass').value='';$('confirm').value='';$('pass').focus()}
+async function openSavedVault(saved,pass,generation,valid=()=>true){
+  const box=JSON.parse(saved);
+  const data=readPayload(await decryptData(box,pass));
+  if(generation!==session||localStorage.getItem(STORE)!==saved||!valid())return false;
+  vault=box;
+  savedVault=saved;
+  accounts=data.accounts;
+  logins=data.logins;
+  return true;
+}
+function showLock(isNew){resetSession();$('app').classList.add('hidden');$('lockScreen').classList.remove('hidden');$('lockTitle').textContent=isNew?'创建加密保险库':'解锁 NOVA';$('lockDesc').textContent=isNew?'设置一个强密码，用于加密本机保存的验证器密钥和登录凭据。密码遗失后无法恢复。':'使用保险库密码或已设置的通行密钥解锁。';$('confirmWrap').classList.toggle('hidden',!isNew);$('unlockSubmit').textContent=isNew?'创建保险库':'解锁';$('pass').value='';$('confirm').value='';refreshPasskey();($('passkeyUnlock').classList.contains('hidden')?$('pass'):$('passkeyUnlock')).focus()}
 function unlock(){
+  cancelPasskey();
+  refreshPasskey();
   lastActivity=Date.now();
   $('lockScreen').classList.add('hidden');
   $('pass').value=$('confirm').value='';
@@ -210,6 +231,9 @@ $('unlockForm').addEventListener('submit',e=>{
   const pass=$('pass').value;
   const confirmation=$('confirm').value;
   if(pass.length<10){toast('请使用至少 10 位密码');return}
+  if(vaultBusy)return;
+  cancelPasskey();
+  refreshPasskey();
   writeVault(async()=>{
     if(key)return;
     const generation=session;
@@ -219,21 +243,152 @@ $('unlockForm').addEventListener('submit',e=>{
         if(pass!==confirmation){toast('两次密码不一致');return}
         savedVault=null;
         await persist([],[],pass);
-      }else{
-        const box=JSON.parse(saved);
-        const data=readPayload(await decryptData(box,pass));
-        if(generation!==session||localStorage.getItem(STORE)!==saved)return;
-        vault=box;
-        savedVault=saved;
-        accounts=data.accounts;
-        logins=data.logins;
-      }
+        localStorage.removeItem(PASSKEY_STORE);
+      }else if(!await openSavedVault(saved,pass,generation))return;
       if(generation!==session)return;
       key=pass;
       unlock();
     }catch{toast('无法打开保险库。请检查密码、备份格式和浏览器存储。')}
   });
 });
+const PASSKEY_STORE='nova-auth-passkey-v1';
+let passkeyAttempt=null;
+
+function supportsPasskey(){
+  return window.isSecureContext&&typeof PublicKeyCredential==='function'&&
+    typeof navigator.credentials?.create==='function'&&typeof navigator.credentials?.get==='function';
+}
+function refreshPasskey(){
+  const available=supportsPasskey();
+  const saved=available&&localStorage.getItem(PASSKEY_STORE)!==null;
+  $('passkeyUnlock').classList.toggle('hidden',!saved||localStorage.getItem(STORE)===null);
+  $('passkeyEnable').classList.toggle('hidden',saved||!available);
+  $('passkeyDisable').classList.toggle('hidden',!saved);
+  $('passkeyUnlock').disabled=Boolean(passkeyAttempt);
+  $('passkeyEnable').disabled=Boolean(passkeyAttempt);
+  $('passkeyStatus').textContent=!available
+    ? '当前浏览器无法使用通行密钥。请继续使用保险库密码。'
+    : saved
+      ? '此浏览器已启用通行密钥。原密码仍可用于解锁和恢复备份。'
+      : '在支持的设备上，用指纹、面容或设备 PIN 解锁。原保险库密码仍可使用。';
+}
+function cancelPasskey(){
+  const current=passkeyAttempt;
+  passkeyAttempt=null;
+  current?.abort();
+}
+async function usePasskey(action){
+  if(passkeyAttempt||vaultBusy||!supportsPasskey())return;
+  const attempt=new AbortController();
+  passkeyAttempt=attempt;
+  const generation=session;
+  const current=()=>generation===session&&passkeyAttempt===attempt;
+  refreshPasskey();
+  try{await action(attempt.signal,current,generation)}
+  catch(error){
+    if(current()){
+      if(error?.name==='NotAllowedError'||error?.name==='AbortError')toast('未完成设备验证，可改用保险库密码。');
+      else if(error?.name==='NotSupportedError')toast('此设备或通行密钥不支持保险库解锁，请使用原密码。');
+      else toast('通行密钥操作未完成。可使用原密码解锁或重新设置。');
+    }
+  }finally{
+    if(current()){passkeyAttempt=null;refreshPasskey()}
+  }
+}
+function unsupportedPasskey(){
+  return new DOMException('WebAuthn PRF is unavailable','NotSupportedError');
+}
+async function passkeyCipher(id,salt,iv,signal,usage){
+  const credential=await navigator.credentials.get({signal,publicKey:{
+    challenge:randomBytes(32),
+    allowCredentials:[{type:'public-key',id:b64ToBytes(id)}],
+    userVerification:'required',
+    extensions:{prf:{eval:{first:salt}}},
+    timeout:60000
+  }});
+  const output=credential?.getClientExtensionResults?.().prf?.results?.first;
+  if(!credential||bytesToB64(credential.rawId)!==id||output?.byteLength!==32)throw unsupportedPasskey();
+  const seed=new Uint8Array(output);
+  try{
+    const encoder=new TextEncoder();
+    const scope=encoder.encode('NOVA local vault passkey v1');
+    const material=await crypto.subtle.importKey('raw',seed,'HKDF',false,['deriveKey']);
+    const wrappingKey=await crypto.subtle.deriveKey(
+      {name:'HKDF',hash:'SHA-256',salt,info:scope},material,
+      {name:'AES-GCM',length:256},false,[usage]
+    );
+    return {
+      key:wrappingKey,
+      params:{name:'AES-GCM',iv,additionalData:encoder.encode('NOVA local vault passkey v1:'+id)}
+    };
+  }finally{seed.fill(0)}
+}
+$('passkeyEnable').onclick=()=>usePasskey(async(signal,current)=>{
+  if(!key||localStorage.getItem(PASSKEY_STORE)!==null)return;
+  const salt=randomBytes(32);
+  const iv=randomBytes(12);
+  const credential=await navigator.credentials.create({signal,publicKey:{
+    rp:{name:'NOVA Authenticator Pro'},
+    user:{id:randomBytes(32),name:'nova-vault',displayName:'NOVA 保险库'},
+    challenge:randomBytes(32),
+    pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
+    authenticatorSelection:{residentKey:'preferred',userVerification:'required'},
+    attestation:'none',
+    extensions:{prf:{}},
+    timeout:60000
+  }});
+  if(!current())return;
+  if(!credential?.rawId||credential.getClientExtensionResults?.().prf?.enabled===false)throw unsupportedPasskey();
+  const id=bytesToB64(credential.rawId);
+  const wrap=await passkeyCipher(id,salt,iv,signal,'encrypt');
+  if(!current()||!key)return;
+  const password=new TextEncoder().encode(key);
+  let encrypted;
+  try{encrypted=await crypto.subtle.encrypt(wrap.params,wrap.key,password)}
+  finally{password.fill(0)}
+  if(!current())return;
+  await writeVault(()=>{
+    if(!current()||!key||localStorage.getItem(STORE)!==savedVault||
+      localStorage.getItem(PASSKEY_STORE)!==null)return;
+    localStorage.setItem(PASSKEY_STORE,JSON.stringify({
+      version:1,id,salt:bytesToB64(salt),iv:bytesToB64(iv),wrapped:bytesToB64(encrypted)
+    }));
+    toast('已启用通行密钥');
+  });
+});
+$('passkeyUnlock').onclick=()=>usePasskey(async(signal,current,generation)=>{
+  const saved=localStorage.getItem(STORE);
+  const setting=localStorage.getItem(PASSKEY_STORE);
+  if(key||!saved||!setting)return;
+  const record=JSON.parse(setting);
+  if(record.version!==1||!record.id)throw Error('Invalid passkey record');
+  const salt=b64ToBytes(record.salt);
+  const iv=b64ToBytes(record.iv);
+  if(salt.length!==32||iv.length!==12)throw Error('Invalid passkey record');
+  const wrap=await passkeyCipher(record.id,salt,iv,signal,'decrypt');
+  if(!current())return;
+  const password=new Uint8Array(await crypto.subtle.decrypt(wrap.params,wrap.key,b64ToBytes(record.wrapped)));
+  let pass;
+  try{pass=new TextDecoder('utf-8',{fatal:true}).decode(password)}
+  finally{password.fill(0)}
+  if(!current())return;
+  const valid=()=>current()&&!key&&localStorage.getItem(PASSKEY_STORE)===setting;
+  await writeVault(async()=>{
+    if(!valid()||!await openSavedVault(saved,pass,generation,valid))return;
+    key=pass;
+    unlock();
+  });
+});
+$('passkeyDisable').onclick=()=>{
+  if(!key)return;
+  cancelPasskey();
+  writeVault(()=>{
+    if(!key||localStorage.getItem(STORE)!==savedVault)return;
+    localStorage.removeItem(PASSKEY_STORE);
+    refreshPasskey();
+    toast('此浏览器已停用通行密钥');
+  });
+};
 function base32(s){s=s.toUpperCase().replace(/[\s=-]/g,'');if(!s||!/^[A-Z2-7]+$/.test(s))throw Error('Secret 不是有效的 Base32 密钥');let bits='',out=[];for(const c of s){const v=b32chars.indexOf(c);if(v<0)throw Error('Secret 不是有效的 Base32 密钥');bits+=v.toString(2).padStart(5,'0')}for(let i=0;i+8<=bits.length;i+=8)out.push(parseInt(bits.slice(i,i+8),2));return new Uint8Array(out)}
 function parseOtp(uri){const u=new URL(uri.trim());if(u.protocol!=='otpauth:'||u.hostname!=='totp')throw Error('只支持 TOTP 二维码（otpauth://totp/）');const q=u.searchParams,raw=decodeURIComponent(u.pathname.slice(1)),parts=raw.split(':');return {issuer:q.get('issuer')||parts[0]||'账户',label:parts.length>1?parts.slice(1).join(':'):parts[0],secret:q.get('secret')||'',digits:Number(q.get('digits')||6),period:Number(q.get('period')||30),algorithm:(q.get('algorithm')||'SHA1').toUpperCase()}}
 async function codeFor(a,seconds=Math.floor(Date.now()/1000)){const counter=Math.floor(seconds/a.period),msg=new Uint8Array(8);let n=counter;for(let i=7;i>=0;i--){msg[i]=n&255;n=Math.floor(n/256)}const algo={'SHA1':'SHA-1','SHA256':'SHA-256','SHA512':'SHA-512'}[a.algorithm];if(!algo)throw Error('不支持的算法');const k=await crypto.subtle.importKey('raw',base32(a.secret),{name:'HMAC',hash:algo},false,['sign']);const h=new Uint8Array(await crypto.subtle.sign('HMAC',k,msg)),o=h[h.length-1]&15;const bin=((h[o]&127)<<24)|(h[o+1]<<16)|(h[o+2]<<8)|h[o+3];return String(bin%10**a.digits).padStart(a.digits,'0')}
@@ -322,6 +477,7 @@ function resetEditor(){
 }
 function resetSession(){
   session++;
+  cancelPasskey();
   key=null;
   vault=null;
   savedVault=null;
@@ -555,6 +711,7 @@ $('importFile').onchange=e=>{
       readPayload(await decryptData(box,pass));
       if(generation!==session||localStorage.getItem(STORE)!==savedVault)throw Error();
       localStorage.setItem(STORE,JSON.stringify(box));
+      localStorage.removeItem(PASSKEY_STORE);
       showLock(false);
       toast('备份已导入，请解锁');
     }catch{toast('导入失败：密码错误、文件无效或保险库已更改')}
@@ -566,11 +723,13 @@ $('wipeBtn').onclick=()=>{
   writeVault(()=>{
     if(generation!==session||localStorage.getItem(STORE)!==savedVault)return;
     localStorage.removeItem(STORE);
+    localStorage.removeItem(PASSKEY_STORE);
     showLock(true);
   });
 };
 window.addEventListener('storage',e=>{
   if((e.key===STORE||e.key===null)&&localStorage.getItem(STORE)!==savedVault)showLock(localStorage.getItem(STORE)===null);
+  if(e.key===PASSKEY_STORE||e.key===null){cancelPasskey();refreshPasskey()}
 });
 document.addEventListener('pointerdown',()=>lastActivity=Date.now());
 document.addEventListener('keydown',e=>{

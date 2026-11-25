@@ -1,4 +1,4 @@
-const CACHE='nova-auth-shell-v3';
+const CACHE='nova-auth-shell-v4';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon.svg','./vendor/jsQR.js'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES.map(path=>new Request(path,{cache:'reload'})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('nova-auth-shell-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
